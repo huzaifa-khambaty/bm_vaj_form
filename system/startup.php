@@ -2,6 +2,7 @@
 
 // Error Reporting
 error_reporting(E_ALL);
+ini_set('memory_limit', '128M');
 // Check Version
 if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
     exit('PHP5.1+ Required');
