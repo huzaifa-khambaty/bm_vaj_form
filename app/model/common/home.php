@@ -20,7 +20,9 @@ class ModelCommonHome extends HModel {
             $sql .= " WHERE m.mohallah_id IN (" . $filter['mohallahs'] . ')';
         }
         $sql .= " AND m.ejamaat_no = m.hof_ejamaat_no";
+        $sql .= " AND LOWER(m.crc_status) = 'registered'";
 
+        //d($sql, true);
         $query = $this->db->query($sql);
         return $query->row;
     }
@@ -35,6 +37,7 @@ class ModelCommonHome extends HModel {
             $sql .= " WHERE m.mohallah_id IN (" . $filter['mohallahs'] . ')';
         }
         $sql .= " AND m.ejamaat_no = m.hof_ejamaat_no";
+        $sql .= " AND LOWER(m.crc_status) = 'registered'";
 
         $query = $this->db->query($sql);
         return $query->row;

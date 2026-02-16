@@ -107,7 +107,7 @@ require_once(DIR_SYSTEM . 'library/template.php');
 //require_once(DIR_SYSTEM . 'library/document_type.php');
 require_once(DIR_SYSTEM . 'library/fpdf.php');
 require_once(DIR_SYSTEM . 'library/barcode.php');
-require_once(DIR_SYSTEM . 'library/rest.php');
+//require_once(DIR_SYSTEM . 'library/rest.php');
 
 //for debuging
 function d($mParam, $bExit = 0, $bVarDump = 0) {

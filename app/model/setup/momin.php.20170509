@@ -1,0 +1,106 @@
+<?php
+
+class ModelSetupMomin extends HModel {
+
+    protected function getAlias() {
+        return 'setup/momin';
+    }
+
+    protected function getTable() {
+        return 'momin';
+    }
+
+    protected function getPrimaryKey() {
+        return 'id';
+    }
+
+    public function getRow($filter=array(), $sort_order=array()) {
+        $sql = "SELECT *";
+        $sql .= " FROM `" . $this->getTable() . "`";
+        if($filter) {
+            if(is_array($filter)) {
+                $table_columns = $this->getTableColumns($this->getTable());
+                $implode = array();
+                foreach($filter as $column => $value) {
+                    if(in_array($column,$table_columns)) {
+                        $implode[] = "`$column`='$value'";
+                    }
+                }
+                if($implode)
+                    $sql .= " WHERE " . implode(" AND ", $implode);
+            } else {
+                $sql .= " WHERE " . $filter;
+            }
+        }
+
+        if($sort_order) {
+            $sql .= " ORDER BY " . implode(',',$sort_order);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->row;
+    }
+
+    public function getRows($filter=array(), $sort_order=array()) {
+        $sql = "SELECT *";
+        $sql .= " FROM `" . $this->getTable() . "`";
+        if($filter) {
+            if(is_array($filter)) {
+                $table_columns = $this->getTableColumns($this->getTable());
+                $implode = array();
+                foreach($filter as $column => $value) {
+                    if(in_array($column,$table_columns)) {
+                        $implode[] = "`$column`='$value'";
+                    }
+                }
+                if($implode)
+                    $sql .= " WHERE " . implode(" AND ", $implode);
+            } else {
+                $sql .= " WHERE " . $filter;
+            }
+        }
+
+        if($sort_order) {
+            $sql .= " ORDER BY " . implode(',',$sort_order);
+        }
+
+        $query = $this->db->query($sql);
+        return $query->rows;
+    }
+
+    public function getMomins($filter=array(), $sort_order=array()) {
+        $mohallah_id = $filter['mohallah_id'];
+        $mohallahs = $filter['mohallahs'];
+        $sf_no = $filter['sf_no'];
+        $ejamaat_no = $filter['ejamaat_no'];
+
+        $sql = "SELECT m.*, m.sfno as sf_no, m.full_name as momin, mh.name as mohallah";
+        $sql .= " FROM `" . $this->getTable() . "` m";
+        $sql .= " INNER JOIN `mohallah` mh ON mh.id = m.mohallah_id";
+        if($mohallah_id) {
+            $sql .= " AND m.mohallah_id = '".$mohallah_id."'";
+        } else {
+            $sql .= " AND m.mohallah_id IN (".$mohallahs.")";
+        }
+        $sql .= " WHERE m.ejamaat_no = m.hof_ejamaat_no";
+        $implode = array();
+        if($sf_no) {
+            $implode[] = "m.sfno in (".$sf_no.")";
+        }
+        if($ejamaat_no) {
+            $implode[] = "m.ejamaat_no in (".$ejamaat_no.")";
+        }
+
+        if($implode) {
+            $sql .= " AND  (" . implode(' OR ', $implode) . ")";
+        }
+
+        $sql .= " ORDER BY m.sfno";
+        //d($sql, true);
+        $query = $this->db->query($sql);
+        return $query->rows;
+    }
+
+}
+
+?>

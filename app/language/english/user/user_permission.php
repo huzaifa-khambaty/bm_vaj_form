@@ -10,6 +10,9 @@ $_['label_access_control']     = 'Access Control';
 $_['label_users']     = 'Users';
 $_['label_form_printing']     = 'Form Printing';
 $_['label_takmeen']     = 'Takmeen';
+$_['label_takmeen_report']     = 'Takmeen Report';
+$_['label_takmeen_report_amount']     = 'Takmeen Amount List';
+$_['label_comparison_report']     = 'Comparison List';
 
 // Column
 $_['column_name']      = 'User Group Name';

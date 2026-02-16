@@ -92,6 +92,21 @@
                                     <label style="width: 12%;"><input attr_name="<?php echo $row; ?>" attr_permission="print" type="checkbox" name="permission[setup/takmeen][print]" value="1" <?php echo ($permissions['setup/takmeen']['print']==1?'checked="checked"':''); ?> /></label>
                                     <label style="width: 12%;"><input attr_name="<?php echo $row; ?>" attr_permission="reprint" type="checkbox" name="permission[setup/takmeen][reprint]" value="1" <?php echo ($permissions['setup/takmeen']['reprint']==1?'checked="checked"':''); ?> /></label>
                                 </div>
+                                <?php $row++; ?>
+                                <div>
+                                    <label style="width: 25%;"><input id="<?php echo $row; ?>" onclick="fn_chk_frm('<?php echo $row; ?>');" type="checkbox" name="chk_form" value="setup/takmeen_report" />&nbsp;<?php echo $label_takmeen_report; ?></label>
+                                    <label style="width: 12%;"><input attr_name="<?php echo $row; ?>" attr_permission="view" type="checkbox" name="permission[setup/takmeen_report][view]" value="1" <?php echo ($permissions['setup/takmeen_report']['view']==1?'checked="checked"':''); ?> /></label>
+                                </div>
+                                <?php $row++; ?>
+                                <div>
+                                    <label style="width: 25%;"><input id="<?php echo $row; ?>" onclick="fn_chk_frm('<?php echo $row; ?>');" type="checkbox" name="chk_form" value="setup/takmeen_report_amount" />&nbsp;<?php echo $label_takmeen_report_amount; ?></label>
+                                    <label style="width: 12%;"><input attr_name="<?php echo $row; ?>" attr_permission="view" type="checkbox" name="permission[setup/takmeen_report_amount][view]" value="1" <?php echo ($permissions['setup/takmeen_report_amount']['view']==1?'checked="checked"':''); ?> /></label>
+                                </div>
+                                <?php $row++; ?>
+                                <div>
+                                    <label style="width: 25%;"><input id="<?php echo $row; ?>" onclick="fn_chk_frm('<?php echo $row; ?>');" type="checkbox" name="chk_form" value="setup/comparison_report" />&nbsp;<?php echo $label_comparison_report; ?></label>
+                                    <label style="width: 12%;"><input attr_name="<?php echo $row; ?>" attr_permission="view" type="checkbox" name="permission[setup/comparison_report][view]" value="1" <?php echo ($permissions['setup/comparison_report']['view']==1?'checked="checked"':''); ?> /></label>
+                                </div>
                             </form>
                         </div>
                     </div>

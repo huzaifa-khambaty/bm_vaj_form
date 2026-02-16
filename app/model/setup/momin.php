@@ -105,6 +105,14 @@ class ModelSetupMomin extends HModel {
         return $query->rows;
     }
 
+    public function getFamilyCount($momin_id) {
+        $sql = "SELECT count(*) as total";
+        $sql .= " FROM `" . $this->getTable() . "` m";
+        $sql .= " WHERE hof_ejamaat_no = (SELECT hof_ejamaat_no FROM `momin` WHERE id='$momin_id')";
+        //d($sql, true);
+        $query = $this->db->query($sql);
+        return $query->row['total'];
+    }
 }
 
 ?>

@@ -129,5 +129,27 @@
         }
 
     }
+
+    function print2All() {
+        var eleID = '';
+        if($('#tblFormData tbody input[type=checkbox]:checked').length > 10) {
+            alert ('Cannot Print more than 10 records');
+        } else {
+            var arrID = [];
+            $('#tblFormData tbody input[type=checkbox]:checked').each(function(i) {
+                eleID = $(this).parent().parent().attr('row_id');
+                //delayedTrigger( $('#'+eleID+' span'), 800*i );
+                arrID[i] = eleID;
+            });
+
+            window.open('<?php echo $action_print2_all; ?>&eid=' + arrID,'_blank');
+        }
+
+        function delayedTrigger(elem, delay)
+        {
+            setTimeout( function() { $(elem).trigger('click'); }, delay );
+        }
+
+    }
 </script>
 <?php echo $footer; ?>

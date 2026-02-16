@@ -1,5 +1,5 @@
 <?php
-
+include_once (DIR_SYSTEM ."library/tcpdf/tcpdf.php");
 class ControllerSetupFormPrinting extends HController
 {
 
@@ -45,6 +45,7 @@ class ControllerSetupFormPrinting extends HController
 
         $this->data['mohallahs'] = $arrMohallahs;
         $this->data['action_print_all'] = $this->url->link($this->getAlias() . '/printAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['action_print2_all'] = $this->url->link($this->getAlias() . '/print2All', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->response->setOutput($this->render());
     }
@@ -87,6 +88,192 @@ class ControllerSetupFormPrinting extends HController
         }
         $pdf->Output();
 
+    }
+
+    public function print2All() {
+        $mids = explode(',',$this->request->get['eid']);
+        $new_mids = array_chunk($mids, 2);
+
+        //d($new_mids, true);
+        $pdf = new PDF2('P', 'pt', 'A5', true, 'UTF-8', false);
+        $lg = Array();
+        $lg['a_meta_charset'] = 'UTF-8';
+        $lg['a_meta_dir'] = 'rtl';
+        $lg['a_meta_language'] = 'fa';
+        $lg['w_page'] = 'page';
+
+        // set some language-dependent strings (optional)
+        $pdf->setLanguageArray($lg);
+
+        $pdf->SetPrintFooter(false);
+        $pdf->SetPrintHeader(false);
+        $pdf->setHeaderMargin(0);
+        $pdf->setFooterMargin(0);
+        $pdf->SetMargins(20,10,20);
+        //$fontname = TCPDF_FONTS::addTTFfont(DIR_SYSTEM . '/library/tcpdf/fonts/fatimi5.ttf', 'TrueTypeUnicode', '', 96);
+
+        // use the font
+        //$pdf->SetFont($fontname, '', 48, '', false);
+        $this->init();
+        $hyear = CURRENT_YEAR;
+        foreach($new_mids as $records) {
+            $pdf->AddPage();
+            foreach($records as $index => $its) {
+                $data = $this->session->data['forms'][$its];
+                $apiReceipt = NEW APIReceipt(PROXY_SERVER);
+                $filter  = array('sf_no' => $data['sfno']);
+                $obj = $apiReceipt->getVReceipts($filter);
+                $response = objectToArray(json_decode($obj));
+                if($response['status'] == 1) {
+                    $data['previous_amount'] = $response['data'][0]['amount'];
+                }
+                //d($this->session->data, true);
+//            if (!file_exists(DIR_BARCODE_EJ . $data['ejamaat_no'] . '.jpeg')) {
+//                $this->barcode->displayDigit(false);
+//                $this->barcode->genBarCode($data['ejamaat_no'], 'jpeg', DIR_BARCODE_EJ . $data['ejamaat_no']);
+//            }
+//            $barcode_ej = DIR_BARCODE_EJ . $data['ejamaat_no'] . '.jpeg';
+//
+//            if (!file_exists(DIR_BARCODE_SF . $data['sf_no'] . '.jpeg')) {
+//                $this->barcode->displayDigit(false);
+//                $this->barcode->genBarCode($data['sf_no'], 'jpeg', DIR_BARCODE_SF . $data['sf_no']);
+//            }
+//            $barcode_sf = DIR_BARCODE_SF . $data['sf_no'] . '.jpeg';
+//
+//            //d($row, true);
+//            $data['barcode_ej'] = $barcode_ej;
+//            $data['barcode_sf'] = $barcode_sf;
+
+//            $pdf->SetLineStyle( array( 'width' => 1, 'color' => array(0,0,0)));
+//            $pdf->Rect(10, 10, $pdf->getPageWidth()-20, $pdf->getPageHeight()-20);
+//            $pdf->SetLineStyle( array( 'width' => 0.25, 'color' => array(0,0,0)));
+                // set font
+                //$fontname = TCPDF_FONTS::addTTFfont(DIR_SYSTEM . '/library/tcpdf/fonts/alfatemi152.ttf', 'TrueTypeUnicode', '', 96);
+
+                // use the font
+                $pdf->SetFont('alfatemi152', '', 24, '', false);
+                //$pdf->SetFont('fatimi5', '', 24, '', false);
+                //$pdf->SetFont('saifee', '', 24, '', false);
+                //$pdf->SetFont('aefurat', '', 24, '', false);
+                //$pdf->SetFont('aefurat', '', 48);
+
+                // print newline
+                //$pdf->Ln(5);
+                //$pdf->Cell(0, 15,'الحقوق الواجبات',0,1,'C');
+                $pdf->SetFont('alfatemi152', '', 20, '', false);
+                $pdf->Cell(0, 5,'شهر الله المعظم 1442هـ',0,1,'C');
+
+                $pdf->setRTL(true);
+                $pdf->Ln(15);
+                $pdf->SetFontSize(15);
+                $pdf->Cell(100, 20,'سنة 1441هـ ما',0,0,'C');
+                $pdf->SetFontSize(32);
+                $pdf->Cell(160, 20,number_format($data['previous_amount']),1,0,'C');
+                $pdf->SetFontSize(16);
+                $pdf->Cell(100, 20,'عرض كيدا',0,0,'R');
+
+                $pdf->Ln(50);
+                $pdf->SetFontSize(15);
+                $pdf->Cell(100, 20,'سنة 1442هـ ما',0,0,'C');
+                $pdf->SetFontSize(32);
+                $pdf->Cell(160, 20,'',1,0,'C');
+                $pdf->SetFontSize(16);
+                $pdf->Cell(100, 20,'ني تخمين كيدى ؛',0,0,'R');
+
+                // print newline
+                $pdf->Ln(60);
+
+                // set LTR direction for english translation
+                $pdf->setRTL(false);
+
+                //$display_name = $data['name_ar'] !=""?iconv("UTF-8",mb_detect_encoding($data['name_ar']),$data['name_ar']):$data['full_name'];
+                $display_name = $data['name_ar'] !=""?iconv("UTF-8",mb_detect_encoding($data['name_ar']),$data['name_ar']):$data['full_name'];
+                // set font
+                $pdf->SetFontSize(15);
+                $y = $pdf->GetY();
+                $pdf->MultiCell(260, 24,$display_name,'B','R',false,0,'',$y);
+                $x = $pdf->GetX();
+                $pdf->SetFontSize(16);
+                $pdf->MultiCell(100, 24,'عرض كرنار نو نام',0,'R',false,0,$x,$y);
+                $pdf->Ln(60);
+
+                // set font
+                //$pdf->SetFont('times', '', 10);
+                $pdf->SetFontSize(16);
+
+                //Print Amount
+                $pdf->Cell(180, 12,'','B',0,'L');
+                //$pdf->Cell(180, 12,$data['mohallah'],'B',0,'L');
+                $pdf->Cell(40, 12,'موضع',0,0,'R');
+                $pdf->SetFont('helvetica', '', 12, '', false);
+                $pdf->Cell(20, 12,'',0,0,'R');
+                $pdf->Cell(50, 12,'ITS No.',1,0,'R');
+                $pdf->Cell(90, 12,$data['ejamaat_no'].' ('.$data['sfno'].')','B',0,'L');
+                //if($index==0) {
+                    $pdf->Ln(28);
+                    $pdf->Cell(0, 12,'','B',1);
+                    $pdf->Ln(20);
+                //}
+
+//            // print newline
+//            $pdf->Ln(40);
+//
+//            // set font
+//            //$fontname = TCPDF_FONTS::addTTFfont(DIR_SYSTEM . '/library/tcpdf/fonts/fatimi5.ttf', 'TrueTypeUnicode', '', 96);
+//            // use the font
+//            $pdf->SetFont($fontname, '', 84, '', false);
+//
+//            $pdf->SetLineStyle( array('width' => 0.5, 'cap' => 'round', 'join' => 'round', 'dash' => '0', 'color' => array(0,0,0)));
+//            //Print Amount
+//            $pdf->Cell(0, 15,$data['amount_vajebaat'],1,1,'C');
+//            $pdf->SetLineStyle( array( 'width' => 0.25, 'color' => array(0,0,0)));
+
+
+//            // set font
+//            $pdf->SetFont('times', '', 10);
+//            $pdf->SetFontSize(10);
+//
+//            $pdf->ln(58);
+//            //Print Amount
+//            $pdf->Cell(10);
+//            $pdf->Cell(40, 5,$data['barcode_no'],0,0,'C');
+//            $pdf->Cell(20);
+//            $pdf->Cell(40, 5,$data['bethak_token'],0,0,'C');
+//            $pdf->Cell(20);
+//            $pdf->Cell(40, 5,$data['ejamaat_no'],0,0,'C');
+//
+//            $pdf->ln(3);
+//            $pdf->Cell(10);
+//            if($data['amount_cash'] > 0) {
+//                $pdf->Cell(40, 1,'C',0,0,'C');
+//            } else {
+//                $pdf->Cell(40, 1,'',0,0,'C');
+//            }
+//            $pdf->Cell(80);
+//            if($data['amount_cheque'] > 0) {
+//                $pdf->Cell(40, 1,'Q',0,0,'C');
+//            } else {
+//                $pdf->Cell(40, 1,'',0,0,'C');
+//            }
+
+                // force print dialog
+//            $js = 'print(true);';
+//            $js .= 'onfocus=function(){ window.close();}';
+//
+//            // set javascript
+//            $pdf->IncludeJS($js);
+                //Close and output PDF document
+
+                $this->model['form_printing_log'] = $this->load->model('setup/form_printing_log');
+                $idata = array(
+                    'momin_id' => $data['ejamaat_no'],
+                );
+                $this->model['form_printing_log']->add($this->getAlias(), $idata);
+            }
+        }
+        //$pdf->Output();
+        $pdf->Output('BethakCard.pdf', 'I');
+        exit;
     }
 
     public function getAjaxLists()
@@ -199,6 +386,12 @@ class ControllerSetupFormPrinting extends HController
                 'class' => 'fa fa-print'
             );
 
+            $actions[] = array(
+                'text' => $this->language->get('text_print'),
+                'href' => $this->url->link($this->getAlias() . '/pdf2', 'token=' . $this->session->data['token'] . '&' . $this->getPrimaryKey() . '=' . $aRow[$this->getPrimaryKey()], 'SSL'),
+                'class' => 'fa fa-print'
+            );
+
             $strAction = '';
             foreach ($actions as $action) {
                 $strAction .= '<a href="' . $action['href'] . '" title="' . $action['text'] . '" ' . (isset($action['click']) ? 'onClick="' . $action['click'] . '"' : '') . '>';
@@ -231,6 +424,10 @@ class ControllerSetupFormPrinting extends HController
 //        $this->model['form_printing'] = $this->load->model('setup/form_printing');
 //        $row = $this->model['form_printing']->getRow(array('form_printing_id' => $form_printing_id));
 //        $hyear = $this->model['form_printing']->getCurrentYear();
+
+        $this->model['momin'] = $this->load->model('setup/momin');
+        $family_count = $this->model['momin']->getFamilyCount(array('momin_id' => $this->request->get['momin_id']));
+
         $hyear = CURRENT_YEAR;
         $row = $this->session->data['forms'][$this->request->get['momin_id']];
 
@@ -316,7 +513,10 @@ class ControllerSetupFormPrinting extends HController
 //                $html .= ' <td align="center">' . (CURRENT_YEAR - 1) . '</td>';
 //                $html .= ' <td align="center">' . (CURRENT_YEAR - 2) . '</td>';
 //                $html .= ' <td align="center">' . (CURRENT_YEAR - 3) . '</td>';
-                $html .= ' <td align="right"><a class="btn btn-default" href="javascript:void(0);" title="Print" onclick="printAll();" >Print</a></td>';
+                $html .= ' <td align="right">';
+                $html .= ' <a class="btn btn-default" href="javascript:void(0);" title="Print" onclick="printAll();" >Print</a>';
+                //$html .= ' <a class="btn btn-default" href="javascript:void(0);" title="Print" onclick="print2All();" >Card</a>';
+                $html .= ' </td>';
                 $html .= ' </tr>';
                 $html .= ' </thead>';
                 $html .= ' <tbody>';
@@ -465,8 +665,33 @@ class PDF extends FPDF
         $this->RotatedImage($row['barcode_ej'], 1100, 800, 225, 50, 90);
         $this->RotatedText(1160, 730, $row['ejamaat_no'], 90);
 
+        $this->SetFont('times', 'B', 20);
+        $this->ln(270);
+        $this->Cell(700);
+        $this->Cell(30, 30, '', 0, 0, 'L');
+
+        $this->SetFont('times', 'B', 20);
+        $this->ln(58);
+        $this->Cell(700);
+        $this->Cell(30, 30, '', 0, 0, 'L');
+
+        $this->SetFont('times', 'B', 20);
+        $this->ln(58);
+        $this->Cell(700);
+        $this->Cell(30, 30, '', 0, 0, 'L');
+
+        $this->SetFont('times', 'B', 20);
+        $this->ln(58);
+        $this->Cell(700);
+        $this->Cell(30, 30, '', 0, 0, 'L');
+
+        $this->SetFont('times', 'B', 20);
+        $this->ln(58);
+        $this->Cell(700);
+        $this->Cell(30, 30, '', 0, 0, 'L');
+
         $this->SetFont('times', 'B', 16);
-        $this->ln(1020);
+        $this->ln(518);
         $this->Cell(40);
         $this->Cell(380, 30, $row['momin'], 0, 0, 'R');
 
@@ -475,16 +700,56 @@ class PDF extends FPDF
         $this->Cell(125);
         $this->Cell(300, 30, $row['ejamaat_no'], 0, 0, 'L');
 
-        $this->SetFont('times', '', 36);
-        $this->ln(240);
-        $this->Cell(125);
-        $this->Cell(300, 30, 'For Office Use Only', 0, 0, 'L');
-
-//        $this->SetFont('times', '', 30);
-//        $this->RotatedText(1110, 1580, $row['sf_no'], 90);
-//        $this->ln(40);
+        $this->SetFont('times', 'B', 16);
+        $this->ln(160);
+//        $this->Cell(140,20,'FOR OFFICE USE','B');
 //
+//        $this->SetFont('times', 'B', 16);
+//        $this->ln(30);
+        $this->Cell(60,20,'Note:');
+        $this->SetFont('times', 'B', 16);
+        $this->Cell(370, 20, '1. Amount to be given vide Pay Order in the name of ', 0, 0, 'L');
+        $this->Cell(165, 20, 'DAWAT-E-HADIYAH', 'B', 0, 'L');
+        $this->Cell(300, 20, ' along with the form.', 0, 0, 'L');
+
+        $this->ln(20);
+        $this->Cell(60,20,'');
+        $this->Cell(300, 20, '2. To process pay order, Dawat-e-Hadiyah NTN # 0787291-7', 0, 0, 'L');
+
+        $this->SetFont('times', '', 16);
+//        $this->ln(20);
+//        $this->Cell(60,20,'');
+//        $this->Cell(300, 20, '3. Collection will be done by Sector/Zone musaid', 0, 0, 'L');
+
+        $this->ln(20);
+        $this->Cell(60,20,'');
+        $this->Cell(300, 20, '3. No Cash Transactions', 0, 0, 'L');
+
+        $this->ln(20);
+        $this->Cell(60,20,'');
+        $this->Cell(300, 20, '4. Signature on Form is mandatory along with instrument details.', 0, 0, 'L');
     }
 }
 
+class PDF2 extends TCPDF
+{
+
+// Page header
+    function Header()
+    {
+
+    }
+
+    // Page footer
+    function Footer()
+    {
+        // Position at 1.5 cm from bottom
+//        $this->SetY(-15);
+        //// Arial italic 8
+        //        $this->SetFont('Arial','I',8);
+        //// Page number
+        //        $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+    }
+
+}
 ?>
