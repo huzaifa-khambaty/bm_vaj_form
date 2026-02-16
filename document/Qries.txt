@@ -1,0 +1,48 @@
+
+INSERT INTO momin (id, sfno, hof_ejamaat_no, ejamaat_no, mohallah_id, full_name)
+SELECT DISTINCT ejamaat_no, sf_no, ejamaat_no, ejamaat_no, m.id AS mohallah_id, momin
+FROM receipt r
+INNER JOIN mohallah m ON m.name = r.mohallah
+WHERE r.sf_no != '9999'
+ORDER BY sf_no, ejamaat_no
+
+
+INSERT INTO _vaj_form_form_printing (momin_id, last_amount)
+SELECT r.ejamaat_no, SUM(amount) AS amount
+FROM receipt r
+INNER JOIN momin m ON m.id = r.ejamaat_no
+WHERE r.receipt_type = 'V'
+GROUP BY r.ejamaat_no
+
+LIMIT 10;
+
+
+UPDATE `_vaj_form_form_printing` v,
+(
+SELECT r.ejamaat_no, SUM(amount) AS amount
+FROM receipt_previous r
+INNER JOIN momin m ON m.id = r.ejamaat_no
+WHERE r.receipt_type = 'V' AND hyear = '1433'
+GROUP BY r.ejamaat_no
+) AS p SET v.previous_amount = p.amount
+WHERE v.momin_id = p.ejamaat_no
+
+
+SHOW WARNINGS
+
+
+SELECT m.sfno, m.ejamaat_no, previous_amount, last_amount 
+FROM `momin` m
+LEFT JOIN (
+SELECT sf_no, ejamaat_no, SUM(amount) AS previous_amount
+FROM receipt_previous
+WHERE receipt_type = 'V' AND hyear = '1433'
+GROUP BY sf_no, ejamaat_no
+) pr ON pr.sf_no = m.sfno AND pr.ejamaat_no = m.ejamaat_no
+LEFT JOIN (
+SELECT sf_no, ejamaat_no, SUM(amount) AS last_amount
+FROM receipt
+WHERE receipt_type = 'V'
+GROUP BY sf_no, ejamaat_no
+) r ON r.sf_no = m.sfno AND r.ejamaat_no = m.ejamaat_no
+ORDER BY m.sfno, m.ejamaat_no

@@ -1,0 +1,759 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    /*    height: 100%;*/
+    background: #FCFCFC;
+}
+body, td, th, input, select, textarea, option, optgroup {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #000000;
+}
+input[type='text'], input[type='password'] {
+    padding: 2px;
+}
+select {
+    padding: 1px;
+}
+textarea {
+    padding: 2px;
+}
+a, a:visited {
+    cursor: pointer;
+}
+a img {
+    border: 0;
+}
+form {
+    margin: 0;
+    padding: 0;
+}
+label {
+    cursor: pointer;
+}
+
+label.filter_label {
+    width: 50px;
+    display: block;
+    float: left;
+}
+
+
+#header .div1 {
+    height: 78px;
+    padding: 0px 30px;
+    min-width: 900px;
+    /*	background: url('../image/header.png') repeat-x;*/
+    background-color: #003366;
+}
+#header .div2 {
+    color: #FFFFFF;
+    padding: 4px 0 0;
+    float: left;
+}
+#header .div3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #FFF;
+    text-align: right;
+    padding: 15px 0px 0px 0px;
+    float: right;
+}
+#header .div2 span {
+    font-weight: bold;
+}
+#menu {
+    background: url('../image/menu.png') repeat-x;
+    position: relative;
+    z-index: 1;
+    height: 34px;
+    clear: both;
+    padding: 0px 30px;
+    min-width: 900px;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#menu > ul.left {
+    float: left;
+}
+#menu > ul.right {
+    float: right;
+}
+#menu > ul {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+#menu > ul ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: url('../image/transparent.png');
+}
+#menu > ul a {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 5px;
+}
+#menu > ul > li + li {
+    background: url('../image/split.png') center no-repeat;
+}
+#menu > ul .top, #menu > ul li li.sfhover {
+    padding: 10px 15px 9px 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #FFFFFF;
+    text-align: center;
+}
+#menu > ul ul li {
+    padding: 2px;
+}
+#menu > ul .selected .top {
+    background: url('../image/selected.png') repeat-x;
+    color: #FFFFFF;
+}
+#menu > ul .selected:hover a.top, #menu > ul .sfhover a.top {
+}
+#menu > ul .parent {
+    background: url('../image/arrow-right.png') 95% center no-repeat;
+}
+#menu > ul li {
+    float: left;
+    list-style: none;
+}
+#menu > ul li ul {
+    position: absolute;
+}
+#menu > ul li li {
+    clear: both;
+}
+#menu > ul li ul a {
+    color: #FFFFFF;
+    height: 15px;
+    width: 145px;
+}
+#menu > ul li ul ul {
+    margin: -27px 0 0 157px;
+}
+#menu > ul li li:hover, #menu > ul li li.sfhover {
+    background: #333;
+    color: #000000;
+}
+#container {
+    height: 100%;
+}
+body > #container {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+    background-color: #CCCCCC;
+    max-width: 960px;
+    margin: 0 auto;
+    overflow: hidden;
+    /*    height: auto;
+        min-height: 100%;*/
+}
+#content {
+    /*background: #FFFFFF url('../image/background.png') 0px 1px repeat-x;*/
+    padding: 10px 30px;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    min-height: 100%;
+}
+#footer {
+    /*    background: #FFFFFF url('../image/footer.png') repeat-x;*/
+    background-color: #003366;
+    /*	height: 90px;*/
+    padding-top: 38px;
+    text-align: center;
+    font-size: 12px;
+    color: #FFFFFF;
+    position: relative;
+    /*	margin-top: -128px;*/
+    clear: both;
+}
+#footer a {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+.breadcrumb, .breadcrumb a {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.success {
+    padding: 10px 10px 10px 33px;
+    margin-bottom: 15px;
+    background: #E9E8FF url('../image/success.png') 10px center no-repeat;
+    border: 1px solid #E9E8FF;
+    color: #0000FF;
+    font-weight:bold;
+}
+.warning {
+    padding: 10px 10px 10px 33px;
+    margin-bottom: 15px;
+    background: #E9E8FF url('../image/warning.png') 10px center no-repeat;
+    border: 1px solid #E9E8FF;
+    color: #555555;
+}
+.attention {
+    padding: 10px 10px 10px 33px;
+    margin-bottom: 15px;
+    background: #FFF5CC url('../image/attention.png') 10px center no-repeat;
+    border: 1px solid #F2DD8C;
+    color: #555555;
+}
+span.required {
+    color: #FF0000;
+    font-weight: bold;
+}
+.error {
+    margin-top: 3px;
+    color: #FF0000;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+}
+.help {
+    color: #666;
+    font-size: 10px;
+    font-weight: normal;
+    font-family: Verdana, Geneva, sans-serif;
+    display: block;
+    max-width: 200px;
+}
+.icon {
+    vertical-align: middle;
+    cursor: pointer;
+}
+.image {
+    cursor: pointer;
+}
+.box {
+    margin-bottom: 15px;
+}
+.box > .heading {
+    height: 38px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 1px solid #DBDBDB;
+    background: url('../image/box.png') repeat-x;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    -moz-border-radius: 7px 7px 0px 0px;
+    -khtml-border-radius: 7px 7px 0px 0px;
+    border-radius: 7px 7px 0px 0px;
+}
+.box > .heading h1 {
+    margin: 0px;
+    padding: 11px 0px 0px 0px;
+    color: #003A88;
+    font-size: 16px;
+    float: left;
+}
+.box > .heading h1 img {
+    float: left;
+    margin-top: -1px;
+    margin-left: 3px;
+    margin-right: 8px;
+}
+.box > .heading .buttons {
+    float: right;
+    padding-top: 8px;
+}
+.box > .content {
+    padding: 10px;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    /*    min-height: 300px; */
+    overflow: auto;
+}
+a.button, .list a.button {
+    text-decoration: none;
+    color: #FFF;
+    display: inline-block;
+    padding-left: 8px;
+    margin-right: 5px;
+    background: url('../image/button-left.png') top left no-repeat;
+}
+a.button span {
+    color: #FFF;
+    text-decoration: none;
+    display: block;
+    padding: 5px 10px 5px 2px;
+    background: url('../image/button-right.png') top right no-repeat;
+}
+.list {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.list td {
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+.list td input[type='text'], input[type='password'] {
+    padding: 2px;
+    width: 94%;
+}
+.list thead td {
+    background-color: #EFEFEF;
+    padding: 5px;
+}
+.list thead td a, .list thead td {
+    text-decoration: none;
+    color: #222222;
+    font-weight: bold;
+}
+/*.list tbody td a {
+    text-decoration: underline;
+}*/
+.list tbody td {
+    vertical-align: middle;
+    padding: 0px 2px;
+}
+.list tbody tr:nth-child(odd) {
+    background: #FFFFFF;
+}
+.list tbody tr:nth-child(even) {
+    /*background: #E4EEF7;
+    background: #F4F4F8;*/
+}
+
+.list .left {
+    text-align: left;
+    padding: 2px;
+}
+.list .right {
+    text-align: right;
+    padding: 2px;
+}
+.list .center {
+    text-align: center;
+    padding: 2px;
+}
+.list .asc {
+    padding-right: 15px;
+    background: url('../image/asc.png') right center no-repeat;
+}
+.list .desc {
+    padding-right: 15px;
+    background: url('../image/desc.png') right center no-repeat;
+}
+.list .filter td {
+    padding: 5px;
+}
+.pagination {
+    float:right;
+    display: inline-block;
+    padding-top: 6px;
+}
+.pagination .links {
+    float: left;
+    padding-top: 6px;
+}
+.pagination .links a {
+    border: 1px solid #DDDDDD;
+    padding: 4px 10px;
+    font-size: 12px;
+    text-decoration: none;
+    color: #A3A3A3;
+}
+.pagination .links b {
+    border: 1px solid #269BC6;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #269BC6;
+    background: #FFFFFF;
+}
+.pagination .results {
+    float: right;
+    padding-top: 6px;
+    font-size: 12px;
+}
+table.form {
+    /*    width: 70%;*/
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+table.form > tbody > tr > td {
+    padding: 10px 10px;
+    color: #000000;
+    border-bottom: 1px dotted #CCCCCC;
+}
+table.form > tbody > tr > td > label {
+    padding-right: 10px;
+    font-weight: bold;
+    display: inline-table;
+    width: 100px;
+}
+.scrollbox {
+    border: 1px solid #CCCCCC;
+    width: 350px;
+    height: 100px;
+    background: #FFFFFF;
+    overflow-y: scroll;
+}
+.scrollbox img {
+    float: right;
+}
+.htabs {
+    padding: 0px 0px 0px 10px;
+    height: 30px;
+    line-height: 16px;
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+}
+.htabs a {
+    border-top: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD; 
+    background: #FFFFFF url('../image/tab.png') repeat-x;
+    padding: 7px 15px 6px 15px;
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #000000;
+    margin-right: 2px;
+}
+.htabs a.selected {
+    /*	padding-bottom: 7px;*/
+    background: #FFFFFF;
+}
+.vtabs {
+    width: 190px;
+    padding: 10px 0px;
+    min-height: 300px;
+    float: left;
+    display: block;
+    border-right: 1px solid #DDDDDD;
+}
+.vtabs a, .vtabs span {
+    display: block;
+    float: left;
+    width: 160px;
+    margin-bottom: 5px;
+    clear: both;
+    border-top: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    background: #F7F7F7;
+    padding: 6px 14px 7px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
+    text-decoration: none;
+    color: #000000;
+}
+.vtabs a.selected {
+    padding-right: 15px;
+    background: #FFFFFF;
+}
+.vtabs a img, .vtabs span img {
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}
+.vtabs-content {
+    margin-left: 205px;
+}
+.scrollbox div {
+    padding: 3px;
+}
+.scrollbox div input {
+    margin: 0px;
+    padding: 0px;
+    margin-right: 3px;
+}
+.scrollbox div.even {
+    background: #FFFFFF;
+}
+.scrollbox div.odd {
+    background: #E4EEF7;
+}
+
+.overview {
+    float: left;
+    width: 49%;
+    margin-bottom: 20px;	
+}
+.overview table {
+    width: 100%;
+}
+.overview td + td {
+    text-align: right;
+}
+.statistic {
+    float: right;
+    width: 49%;
+    margin-bottom: 20px;
+}
+.range {
+    float: right;
+    color: #FFF;
+    vertical-align: middle;
+}
+.range {
+    padding-top: 1px;
+    padding-right: 1px;
+}
+.range, .range select {
+    font-size: 11px;	
+}
+.latest {
+    clear: both;	
+}
+.latest tbody td {
+    background: #FFF;
+}
+.dashboard-heading {
+    background: #547C96; 
+    color: #FFF; 
+    border-bottom: 1px solid #8EAEC3; 
+    padding: 5px; 
+    font-size: 14px; 
+    font-weight: bold;	
+}
+.dashboard-content {
+    background: #FCFCFC; 
+    border: 1px solid #8EAEC3; 
+    padding: 10px; 
+    min-height: 230px;
+}
+
+
+/* Pagination nested 
+.paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
+        height: 19px;
+        width: 19px;
+        margin-left: 3px;
+        float: left;
+}
+
+.paginate_disabled_previous {
+        background-image: url('../image/back_disabled.jpg');
+}
+
+.paginate_enabled_previous {
+        background-image: url('../image/back_enabled.jpg');
+}
+
+.paginate_disabled_next {
+        background-image: url('../image/forward_disabled.jpg');
+}
+
+.paginate_enabled_next {
+        background-image: url('../image/forward_enabled.jpg');
+}*/
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables display
+*/
+table.display {
+    margin: 0 auto;
+    clear: both;
+    width: 100%;
+
+    /* Note Firefox 3.5 and before have a bug with border-collapse
+     * ( https://bugzilla.mozilla.org/show%5Fbug.cgi?id=155955 ) 
+     * border-spacing: 0; is one possible option. Conditional-css.com is
+     * useful for this kind of thing
+     *
+     * Further note IE 6/7 has problems when calculating widths with border width.
+     * It subtracts one px relative to the other browsers from the first column, and
+     * adds one to the end...
+     *
+     * If you want that effect I'd suggest setting a border-top/left on th/td's and 
+     * then filling in the gaps with other borders.
+    */
+}
+
+table.display thead th {
+    padding: 3px 18px 3px 10px;
+    border-bottom: 1px solid black;
+    font-weight: bold;
+    cursor: pointer;
+    /* cursor: hand; */
+}
+
+table.display tfoot th {
+    padding: 3px 18px 3px 10px;
+    border-top: 1px solid black;
+    font-weight: bold;
+}
+
+table.display tr.heading2 td {
+    border-bottom: 1px solid #aaa;
+}
+
+table.display td {
+    padding: 3px 10px;
+}
+
+table.display td.center {
+    text-align: center;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables sorting
+*/
+
+.sorting_asc {
+    background: url('../image/sort_asc.png') no-repeat right center;
+}
+
+.sorting_desc {
+    background: url('../image/sort_desc.png') no-repeat right center;
+}
+
+.sorting {
+    background: url('../image/sort_both.png') no-repeat right center;
+}
+
+.sorting_asc_disabled {
+    background: url('../image/sort_asc_disabled.png') no-repeat right center;
+}
+
+.sorting_desc_disabled {
+    background: url('../image/sort_desc_disabled.png') no-repeat right center;
+}
+
+.sub-heading {
+    background: url('../image/menu.png') repeat-x #000;
+    position: relative;
+    z-index: 1;
+    /*	height: 34px;*/
+    clear: both;
+    /*	padding: 0px 30px;*/
+    color: #FFF;
+}
+
+#lab_receipt_details.list td input[type="text"] {
+    width: 70px;
+}
+
+#opd_receipt_details.list td input[type="text"] {
+    width: 98px;
+}
+
+.menu_group {
+    background-color: #DEE7EC;
+    color: #000000;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0 0 0 3px;
+}
+
+.menu_group_items {
+    background-color: #F9F9F9;
+    border: 1px solid #8CACBB;
+    font-weight: normal;
+    padding: 9px;
+}
+
+.bullet {
+    background-image: url('../image/bullet_arrow.gif');
+    background-repeat: no-repeat;
+    padding-left: 25px;  /* width of the image plus a little extra padding */
+    display: block;  /* may not need this, but I've found I do */
+}
+
+.flot-left
+{
+    float:left;
+}
+
+.flot-right{
+    float:right;
+}
+.btn{
+    margin-bottom:10px;
+    background-color:#0044cc;
+}
+
+.dataTables_filter{
+    float:right;
+    margin-top:05px;
+}
+
+.dataTables_length{
+    margin-top:05px;
+}
+
+.insert-btn{
+    text-align:center;
+    width:60px;
+    font-size:12px;
+    margin-right:05px;
+    margin-top:-4px;
+    border-radius:5px;
+    color:#FFFFFF;
+    float:right;
+    background-color:#0044cc;
+    padding:7px 15px 7px 10px;
+}
+
+.insert-btn:hover{
+    color:#000000;
+    text-decoration:none;
+}
+
+.heading{
+    color:#000000;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.heading h1{
+	margin-top:-15px;
+}
+
+#service_row_0{
+    width:700px;
+}
+
+.scroll{
+    overflow:auto;
+}
+
+.width{
+    width:-30px;
+}
+
+center{
+	text-align:center;
+}
+
+.chosen{
+    width:175px;	
+}
+.input-sm{
+    width:100px;
+    margin-left:5px;
+}
+
+.glyphicon{
+	color:#0000FF;
+}
+
+.margin-left{
+ margin-left:01px;
+}
+/*************************************************************************************************************************************
+
+													SALE INVOICE PRINT
+
+********************************************************************************************************************************/

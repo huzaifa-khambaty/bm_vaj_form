@@ -1,0 +1,99 @@
+#page-warp{
+    width:960px;
+    margin:0 auto;	
+}
+
+#header h1{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:25px;
+}
+
+.number{
+    float:right;
+    margin-top: -55px;
+}
+
+#header p{
+    font-size:16px;
+    text-align:center;
+    margin-top:-30px;
+    line-height:20px;
+}
+
+.info{
+    margin-left:80px;
+}
+
+.info ul{
+    margin-top:-30px;
+    height:80px;
+    text-align:center;
+}
+
+.info ul li{
+    float:left;
+    list-style:none;
+    margin-top:-20px;
+    margin-right:40px;
+}
+.info ul li h6{
+    font-size:14px;
+    font-weight:bolder;
+}
+
+.list {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+.list td {
+    border: 1px solid #DDDDDD;
+}
+.list td input[type='text'], input[type='password'] {
+    padding: 2px;
+    width: 94%;
+}
+.list thead td {
+    background-color: #EFEFEF;
+    padding: 10px;
+}
+.list thead td a, .list thead td {
+    text-decoration: none;
+    color: #222222;
+    font-weight: bold;
+}
+/*.list tbody td a {
+    text-decoration: underline;
+}*/
+.list tbody td {
+    vertical-align: middle;
+    padding: 10px;
+}
+.list tbody tr:nth-child(odd) {
+    background: #FFFFFF;
+}
+.list tbody tr:nth-child(even) {
+    /*background: #E4EEF7;
+    background: #F4F4F8;*/
+}
+
+.list tfoot tr td{
+    padding:10px;
+}
+
+#footer p{
+    font-weight:bold;
+}
+
+.left{
+    float:right;
+}
+
+.top{
+    padding-top:-40px;;
+}
+span{
+    margin-left:30px;
+}
+

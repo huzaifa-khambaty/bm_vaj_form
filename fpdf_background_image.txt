@@ -1,0 +1,11 @@
+$pdf = new FPDF('P', 'pt', array(1240, 1754));
+
+$pdf->AddPage();
+
+$pdf->Image('../images/'.$image, 0, 0, $size[0], $size[1]);
+
+$pdf->SetFont('Arial', 'B', 23);
+
+$name = "{$forename} {$surname}";
+
+$pdf->Text(500, 457, $name); 
